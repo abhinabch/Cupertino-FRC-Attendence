@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cupertino Robotics Attendence</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #url {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        #submit {
+            padding: 10px 20px;
+            background-color: #d12828;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #submit:hover {
+            background-color: #ebd486;
+        }
+        h1 {
+            text-align: center; /* Center the heading */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cupertino Robotics Attendence</h1>
+        <form id="urlForm" onsubmit="event.preventDefault(); submitURL();">
+            <input type="text" id="url" name="url" placeholder="Enter URL">
+            <button id="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        function submitURL() {
+            var url = document.getElementById('url').value;
+            fetch('/open_url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({url: url}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('url').value = '';  // Clear the input field
+            });
+        }
+    </script>
+</body>
+</html>
